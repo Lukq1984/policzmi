@@ -743,9 +743,12 @@
 									<input
 										type="hidden"
 										name="_next"
-										value="https://twojadomena.pl/podziekowanie.html"
+										value="https://lukq1984.github.io/policzmi/#/thank-you.html"
 									/>
-									<input type="hidden" name="_captcha" value="false" />
+									<!-- Zmieniona wartość _captcha na true dla lepszej ochrony -->
+									<input type="hidden" name="_captcha" value="true" />
+									<!-- Dodany honeypot dla ochrony przed spamem -->
+									<input type="text" name="_honey" style="display:none">
 
 									<div class="mb-3">
 										<label for="nameInput" class="form-label">
@@ -1413,13 +1416,17 @@
 					});
 				});
 
-				// Obsługa formularza kontaktowego
+				// Obsługa formularza kontaktowego - nie blokujemy już standardowej wysyłki
 				document
 					.getElementById("contactForm")
 					.addEventListener("submit", function (e) {
-						e.preventDefault();
-						alert("Wiadomość została wysłana. Dziękuję za kontakt!");
-						this.reset();
+						// Nie blokujemy domyślnej akcji - niech formularz zostanie wysłany
+						// Możemy dodać potwierdzenie przed wysyłką:
+						const confirmed = confirm("Czy na pewno chcesz wysłać tę wiadomość?");
+						if (!confirmed) {
+							e.preventDefault();
+						}
+						// Nie resetujemy już formularza tutaj - przeglądarka zrobi to po przekierowaniu
 					});
 
 				// Zmiana tytułu dla formularza kontaktowego
